@@ -12,6 +12,12 @@
 #include "rexos/userspace/ipc.h"
 #include "device.h"
 #include "app_hid.h"
+#include "button.h"
+
+typedef enum {
+    APP_TIMER_BUTTON_DOUBLE_PRESS = 0x00,
+    APP_TIMER_BUTTON_LONG_PRESS,
+} APP_TIMER;
 
 typedef struct _APP {
     DEVICE device;
@@ -19,6 +25,7 @@ typedef struct _APP {
     HANDLE timer;
     HANDLE usbd;
     bool usb_started;
+    BUTTON button;
     HID hid;
 } APP;
 

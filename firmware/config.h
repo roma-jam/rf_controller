@@ -9,6 +9,15 @@
 
 #define VERSION                                     "0.1b"
 
+// ============================= BUTTONS ======================================
+#define BUTTON0                                     A0
+#define BUTTON1                                     A10
+#define BUTTON2                                     A11
+#define BUTTON3                                     A12
+
+#define B_PRESS_MS                                  350
+#define B_PRESS_LONG_MS                             1000
+
 // =============================== PINs =======================================
 #define DEVICE_POWER_PIN1                           A0
 #define DEVICE_POWER_PIN2                           A1
@@ -87,5 +96,6 @@
 #define APP_DEBUG_HID                               0
 #define APP_DEBUG_DEVICE                            1
 #define APP_DEBUG_LCD                               1
+#define APP_DEBUG_BUTTON                            1
 
 #endif // CONFIG_H

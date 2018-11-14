@@ -170,7 +170,7 @@ static inline void lcd_device_init(LCD* lcd, IPC* ipc)
     lcd_send_cmd(PCD8544_SETXADDR | 0);
     lcd_send_cmd(PCD8544_SETYADDR | 0);
 
-    lcd->mode = LCD_MODE_DRAW;
+    lcd->mode = LCD_MODE_OVERWRITE;
     memset(lcd->data_buf, 0x00, lcd->data_buf_size);
     lcd->need_update = true;
 }

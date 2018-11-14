@@ -59,9 +59,10 @@ SRC_C                      += stm32_pin.c stm32_gpio.c stm32_power.c stm32_timer
 SRC_C					   += usbd.c hidd.c 
 #userspace lib
 SRC_C                      += ipc.c io.c process.c stdio.c stdlib.c systime.c time.c uart.c power.c stream.c pin.c htimer.c usb.c spi.c eep.c
+SRC_C 						+= pinboard.c
 #app
-SRC_C                      += app.c checksum.c device.c led.c app_usb.c app_hid.c crc.c
-SRC_C						+= flash_update.c lcd.c lcd_format.c
+SRC_C                      += app.c checksum.c crc.c button.c
+SRC_C						+= lcd.c lcd_format.c
  
 OBJ                         = $(SRC_AS:%.S=%.o) $(SRC_C:%.c=%.o)
 #----------------------------------------------------------
