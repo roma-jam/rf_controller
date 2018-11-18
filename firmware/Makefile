@@ -43,6 +43,9 @@ INCLUDE_FOLDERS            += $(USERSPACE) $(USERSPACE)/core $(USERSPACE)/stm32
 #sys
 INCLUDE_FOLDERS            += $(REXOS)/drv $(REXOS)/midware $(REXOS)/midware/usbd
 
+INCLUDE_FOLDERS			   += cc1101
+
+
 INCLUDES                    = $(INCLUDE_FOLDERS:%=-I%)
 VPATH                      += $(INCLUDE_FOLDERS)
 #----------------------------------------------------------
@@ -55,6 +58,7 @@ SRC_C                      += kernel.c dbg.c kstdlib.c karray.c kso.c kirq.c kpr
 SRC_C                      += lib_lib.c lib_systime.c pool.c printf.c lib_std.c lib_stdio.c lib_array.c lib_so.c
 #drv
 SRC_C                      += stm32_pin.c stm32_gpio.c stm32_power.c stm32_timer.c stm32_wdt.c stm32_rtc.c stm32_exo.c stm32_eep.c stm32_uart.c stm32_usb.c
+SRC_C						+= stm32_spi.c	
 #midware 
 SRC_C					   += usbd.c hidd.c 
 #userspace lib
@@ -63,6 +67,8 @@ SRC_C 						+= pinboard.c
 #app
 SRC_C                      += app.c checksum.c crc.c button.c
 SRC_C						+= lcd.c lcd_format.c
+
+SRC_C						+= cc1101.c cc1101_hw.c
  
 OBJ                         = $(SRC_AS:%.S=%.o) $(SRC_C:%.c=%.o)
 #----------------------------------------------------------

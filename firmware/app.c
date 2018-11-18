@@ -20,6 +20,8 @@
 #include "button.h"
 #include "lcd.h"
 
+#include "cc1101/cc1101.h"
+
 void app();
 
 const REX __APP = {
@@ -69,6 +71,8 @@ void app()
     checksum_init(&app);
     button_init(&app);
     lcd_init(&app);
+    app.cc1101 = cc1101_open();
+
 
     // TODO: remove me
     sleep_ms(100);

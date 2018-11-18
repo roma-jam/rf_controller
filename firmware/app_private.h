@@ -15,18 +15,18 @@
 #include "button.h"
 
 typedef enum {
+    HAL_CC1101 = HAL_APP,
+} HAL_APP_GROUPS;
+
+typedef enum {
     APP_TIMER_BUTTON_DOUBLE_PRESS = 0x00,
     APP_TIMER_BUTTON_LONG_PRESS,
 } APP_TIMER;
 
 typedef struct _APP {
-    DEVICE device;
     HANDLE lcd;
-    HANDLE timer;
-    HANDLE usbd;
-    bool usb_started;
+    HANDLE cc1101;
     BUTTON button;
-    HID hid;
 } APP;
 
 #endif // APP_PRIVATE_H
