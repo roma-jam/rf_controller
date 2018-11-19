@@ -46,7 +46,7 @@ HANDLE cc1101_open()
 
 void cc1101_set_packet_size(HANDLE process, unsigned int packet_size)
 {
-    ipc_post_inline(process, HAL_REQ(HAL_CC1101, CC1101_SET_PACKET_SIZE), packet_size, 0, 0);
+    ipc_post_inline(process, HAL_CMD(HAL_CC1101, CC1101_SET_PACKET_SIZE), packet_size, 0, 0);
 }
 
 void cc1101_set_channel(HANDLE process, unsigned int channel)

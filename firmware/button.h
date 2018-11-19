@@ -15,8 +15,7 @@
 
 typedef struct {
     HANDLE pinboard;
-    HANDLE timer_double, timer_long;
-
+    HANDLE timer_double, timer_long, encoder_timer;
     bool pressed;
 } BUTTON;
 

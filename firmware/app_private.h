@@ -23,7 +23,8 @@ typedef enum {
 typedef enum {
     APP_TIMER_BUTTON_DOUBLE_PRESS = 0x00,
     APP_TIMER_BUTTON_LONG_PRESS,
-    APP_BATTERY,
+    APP_TIMER_ENCODER,
+    APP_TIMER_BATTERY,
 } APP_TIMER;
 
 typedef struct _APP {

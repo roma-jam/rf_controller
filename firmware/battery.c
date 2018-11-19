@@ -29,7 +29,7 @@ static inline void battery_measure(APP* app)
 void battery_init(APP* app)
 {
     app->battery.mV = 0;
-    app->battery.timer = timer_create(APP_BATTERY, HAL_BATTERY);
+    app->battery.timer = timer_create(APP_TIMER_BATTERY, HAL_BATTERY);
     if(app->battery.timer != INVALID_HANDLE)
         timer_start_ms(app->battery.timer, BATTERY_MEASURE_TIMEOUT_MS);
 

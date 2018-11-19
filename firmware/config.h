@@ -30,6 +30,14 @@
 #define B_PRESS_LONG_MS                             1000
 
 
+#define BUTTON_ENCODER_CH1_PIN                      B4
+#define BUTTON_ENCODER_CH2_PIN                      B5
+#define BUTTON_ENCODER_TIM_REG                      TIM22
+#define BUTTON_ENCODER_TIMER                        TIM_22
+#define BUTTON_ENCODER_CHANNEL1                     TIM_CHANNEL1
+#define BUTTON_ENCODER_CHANNEL2                     TIM_CHANNEL2
+
+
 // ============================== BATTERY =====================================
 #define BATTERY_ADC                                 ADC1
 #define BATTERY_CHANNEL                             STM32_ADC1
