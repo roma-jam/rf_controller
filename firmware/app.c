@@ -74,23 +74,39 @@ void app()
     battery_init(&app);
     app.cc1101 = cc1101_open();
 
+    cc1101_set_packet_size(app.cc1101, 5);
     cc1101_set_channel(app.cc1101, 0);
     cc1101_set_power(app.cc1101, CC_PwrMinus10dBm);
 
     lcd_printf(&app, 4, 0, "chn: %d", 0);
     lcd_printf(&app, 5, 0, "pwr: 0x%X", CC_PwrMinus10dBm);
 
-
-
     // TODO: remove me
     sleep_ms(100);
     process_info();
+
+#if (CLIENT)
+    uint8_t data[100];
+    int RSSI;
+    app.timer = timer_create(0, HAL_APP);
+#endif // CLIENT
 
     for (;;)
     {
         ipc_read(&ipc);
         switch (HAL_GROUP(ipc.cmd))
         {
+#if (CLIENT)
+            case HAL_APP:
+                if(ipc.param1 == IPC_TIMEOUT)
+                {
+                    if(cc1101_receive(app.cc1101, data, 5, CC1101_FLAGS_NO_TIMEOUT, &RSSI) > 0)
+                        lcd_printf(&app, 1, 0, "PING, %d dBm", RSSI);
+                    else
+                        lcd_printf(&app, 1, 0, "PING...FAILURE");
+                }
+                break;
+#endif // CLIENT
             case HAL_PINBOARD:
                 button_request(&app, &ipc);
                 break;

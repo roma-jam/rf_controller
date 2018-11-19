@@ -9,6 +9,15 @@
 
 #define VERSION                                     "0.1b"
 
+#define HOST                                        1
+#define CLIENT                                      0
+
+
+#if (HOST)
+#if (CLIENT)
+#error "HOST and CLIENT could be both"
+#endif
+#endif
 // ============================= BUTTONS ======================================
 #define BUTTON_COUNT                                4
 

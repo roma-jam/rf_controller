@@ -15,6 +15,7 @@
 #include "config.h"
 #include "device.h"
 #include "lcd.h"
+#include "cc1101/cc1101.h"
 
 void button_init(APP* app)
 {
@@ -61,6 +62,21 @@ static inline void button_left_press(APP* app)
     printf("BUTTON: left press\n");
 #endif // APP_DEBUG_BUTTON
     lcd_printf(app, 2, 0, "BUTTON 1 PRESS ");
+
+#if (HOST)
+    uint8_t packet[5] = {0};
+    lcd_printf(app, 1, 0, "Radio ping..");
+    /* send packet by radio */
+    if(cc1101_transmit(app->cc1101, packet, 5))
+        lcd_printf(app, 1, 0, "Radio ping...SEND");
+    else
+        lcd_printf(app, 1, 0, "Radio ping...FAIL");
+#endif // HOST
+
+#if (CLIENT)
+    timer_start_ms(app->timer, 1000);
+    lcd_printf(app, 1, 0, "PING..          ");
+#endif
 }
 
 static inline void button_center_press(APP* app)

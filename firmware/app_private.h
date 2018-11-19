@@ -27,6 +27,7 @@ typedef enum {
 } APP_TIMER;
 
 typedef struct _APP {
+    HANDLE timer;
     HANDLE lcd;
     HANDLE cc1101;
     BUTTON button;
