@@ -51,12 +51,12 @@ void cc1101_set_packet_size(HANDLE process, unsigned int packet_size)
 
 void cc1101_set_channel(HANDLE process, unsigned int channel)
 {
-    ipc_post_inline(process, HAL_REQ(HAL_CC1101, CC1101_SET_CHANNEL), channel, 0, 0);
+    ipc_post_inline(process, HAL_CMD(HAL_CC1101, CC1101_SET_CHANNEL), channel, 0, 0);
 }
 
 void cc1101_set_power(HANDLE process, uint8_t CC_Pwr)
 {
-    ipc_post_inline(process, HAL_REQ(HAL_CC1101, CC1101_SET_POWER), CC_Pwr, 0, 0);
+    ipc_post_inline(process, HAL_CMD(HAL_CC1101, CC1101_SET_POWER), CC_Pwr, 0, 0);
 }
 
 static bool cc1101_transmit_sync_internal(HANDLE process, IO* io, unsigned int size, unsigned int flags)

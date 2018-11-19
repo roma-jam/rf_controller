@@ -10,22 +10,25 @@
 #define VERSION                                     "0.1b"
 
 // ============================= BUTTONS ======================================
+#define BUTTON_COUNT                                4
+
 #define BUTTON0                                     A0
 #define BUTTON1                                     A10
 #define BUTTON2                                     A11
 #define BUTTON3                                     A12
 
-#define B_PRESS_MS                                  350
+#define B_PRESS_MS                                  150
 #define B_PRESS_LONG_MS                             1000
 
-// =============================== PINs =======================================
-#define DEVICE_POWER_PIN1                           A0
-#define DEVICE_POWER_PIN2                           A1
-#define DEVICE_DATA_PIN1                            B7
-#define DEVICE_DATA_PIN2                            B8
 
-#define DEVICE_DEAFULT_DELAY_MS                     200
-#define DEVICE_TEST_TIMEOUT_MS                      300
+// ============================== BATTERY =====================================
+#define BATTERY_ADC                                 ADC1
+#define BATTERY_CHANNEL                             STM32_ADC1
+#define BATTERY_REFERENCE_MV                        3000
+#define BATTERY_ADC_RESOLUTION_BIT                  12
+#define BATTERY_MEASURE_PIN                         A1
+#define BATTERY_MEASURE_TIMEOUT_MS                  5000
+#define BATTERY_INTEGRAL_COUNT                      20
 
 // =============================== LEDS ========================================
 #define LED_COUNT                                   4
@@ -92,10 +95,8 @@
 #define APP_DEBUG                                   1
 #define APP_DEBUG_ERRORS                            1
 
-#define APP_DEBUG_USB                               0
-#define APP_DEBUG_HID                               0
-#define APP_DEBUG_DEVICE                            1
-#define APP_DEBUG_LCD                               1
+#define APP_DEBUG_LCD                               0
 #define APP_DEBUG_BUTTON                            1
+#define APP_DEBUG_BATTERY                           0
 
 #endif // CONFIG_H

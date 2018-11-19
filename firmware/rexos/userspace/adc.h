@@ -29,12 +29,12 @@ __STATIC_INLINE int adc_get(unsigned int channel, unsigned int samplerate)
 
 __STATIC_INLINE void adc_open()
 {
-    ipc_post_exo(HAL_REQ(HAL_ADC, IPC_OPEN), ADC_HANDLE_DEVICE, 0, 0);
+    ipc_post_exo(HAL_CMD(HAL_ADC, IPC_OPEN), ADC_HANDLE_DEVICE, 0, 0);
 }
 
 __STATIC_INLINE void adc_open_channel(uint32_t channel)
 {
-    ipc_post_exo(HAL_REQ(HAL_ADC, IPC_OPEN), channel, 0, 0);
+    ipc_post_exo(HAL_CMD(HAL_ADC, IPC_OPEN), channel, 0, 0);
 }
 
 #endif // ADC_H

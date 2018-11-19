@@ -8,7 +8,7 @@
 #define STM32_CONFIG_H
 
 //---------------------- fast drivers definitions -----------------------------------
-#define STM32_ADC_DRIVER                        0
+#define STM32_ADC_DRIVER                        1
 #define STM32_DAC_DRIVER                        0
 #define STM32_WDT_DRIVER                        0
 #define STM32_EEP_DRIVER                        1

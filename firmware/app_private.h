@@ -13,20 +13,24 @@
 #include "device.h"
 #include "app_hid.h"
 #include "button.h"
+#include "battery.h"
 
 typedef enum {
     HAL_CC1101 = HAL_APP,
+    HAL_BATTERY,
 } HAL_APP_GROUPS;
 
 typedef enum {
     APP_TIMER_BUTTON_DOUBLE_PRESS = 0x00,
     APP_TIMER_BUTTON_LONG_PRESS,
+    APP_BATTERY,
 } APP_TIMER;
 
 typedef struct _APP {
     HANDLE lcd;
     HANDLE cc1101;
     BUTTON button;
+    BATTERY battery;
 } APP;
 
 #endif // APP_PRIVATE_H

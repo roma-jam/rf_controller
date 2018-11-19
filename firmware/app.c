@@ -71,7 +71,15 @@ void app()
     checksum_init(&app);
     button_init(&app);
     lcd_init(&app);
+    battery_init(&app);
     app.cc1101 = cc1101_open();
+
+    cc1101_set_channel(app.cc1101, 0);
+    cc1101_set_power(app.cc1101, CC_PwrMinus10dBm);
+
+    lcd_printf(&app, 4, 0, "chn: %d", 0);
+    lcd_printf(&app, 5, 0, "pwr: 0x%X", CC_PwrMinus10dBm);
+
 
 
     // TODO: remove me
@@ -86,10 +94,12 @@ void app()
             case HAL_PINBOARD:
                 button_request(&app, &ipc);
                 break;
-
+            case HAL_BATTERY:
+                battery_request(&app, &ipc);
+                break;
             default:
 #if (APP_DEBUG_ERRORS)
-                printf("APP: unhandled IPC group %X\n", HAL_GROUP(ipc.cmd));
+                printf("APP: unhandled IPC group %X, ITEM: %X\n", HAL_GROUP(ipc.cmd), HAL_ITEM(ipc.cmd));
 #endif // APP_DEBUG_ERRORS
                 error(ERROR_NOT_SUPPORTED);
                 break;

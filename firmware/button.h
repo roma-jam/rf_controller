@@ -11,10 +11,12 @@
 #include "app.h"
 #include "rexos/userspace/ipc.h"
 #include "rexos/userspace/types.h"
+#include "config.h"
 
 typedef struct {
     HANDLE pinboard;
     HANDLE timer_double, timer_long;
+
     bool pressed;
 } BUTTON;
 

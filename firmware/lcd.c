@@ -163,7 +163,7 @@ static inline void lcd_device_init(LCD* lcd, IPC* ipc)
 
     lcd_send_cmd(PCD8544_FUNCTIONSET | PCD8544_FUNCTIONSET_EXTENDED);
     lcd_send_cmd(PCD8544_SETBIAS | 0x03);
-    lcd_send_cmd(PCD8544_SETVOP | 0x41);
+    lcd_send_cmd(PCD8544_SETVOP | 0x3A);
     lcd_send_cmd(PCD8544_FUNCTIONSET | PCD8544_FUNCTIONSET_NORMAL);
     lcd_send_cmd(PCD8544_DISPLAYCONTROL | PCD8544_DISPLAYCONTROL_NORMAL);
 

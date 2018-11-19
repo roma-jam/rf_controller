@@ -309,7 +309,7 @@ void cc1101_hw_init(CC1101_HW* cc1101)
                                  SPI_SSI_ON |
                                  SPI_DATA_CK_IDLE_LOW |
                                  SPI_DATA_FIRST_EDGE |
-                                 SPI_BAUDRATE_DIV4))
+                                 SPI_BAUDRATE_DIV64))
     {
 #if (CC1101_DEBUG_ERRORS)
         printf("CC1101: spi open failure\n");
