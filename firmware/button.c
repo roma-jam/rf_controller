@@ -50,19 +50,20 @@ void button_init(APP* app)
     BUTTON_ENCODER_TIM_REG->CCER   = TIM_CCER_CC1P | TIM_CCER_CC2P;
     BUTTON_ENCODER_TIM_REG->CCMR1  = TIM_CCMR1_CC2S_0 | TIM_CCMR1_CC1S_0;
     /* count both edges */
-    BUTTON_ENCODER_TIM_REG->SMCR   = TIM_SMCR_SMS_0 | TIM_SMCR_SMS_1;
+//    BUTTON_ENCODER_TIM_REG->SMCR   = TIM_SMCR_SMS_0 | TIM_SMCR_SMS_1;
+    BUTTON_ENCODER_TIM_REG->SMCR   = TIM_SMCR_SMS_0;
     /* Sampling filter & Prescaler */
     BUTTON_ENCODER_TIM_REG->CCMR1  = TIM_CCMR1_IC1PSC | TIM_CCMR1_IC1F | TIM_CCMR1_IC2PSC | TIM_CCMR1_IC2F;
 
-    BUTTON_ENCODER_TIM_REG->ARR    = 100;
-    BUTTON_ENCODER_TIM_REG->CNT    = 50;
+    BUTTON_ENCODER_TIM_REG->ARR    = 199;
+    BUTTON_ENCODER_TIM_REG->CNT    = 100;
     BUTTON_ENCODER_TIM_REG->CR1    = TIM_CR1_CEN;
-    BUTTON_ENCODER_TIM_REG->DIER   = TIM_DIER_CC1IE | TIM_DIER_CC2IE | TIM_DIER_UIE;
+//    BUTTON_ENCODER_TIM_REG->DIER   = TIM_DIER_CC1IE | TIM_DIER_CC2IE | TIM_DIER_UIE;
 
     irq_register(TIM22_IRQn, button_encoder_irq, (void*)app);
-    NVIC_EnableIRQ(TIM22_IRQn);
+//    NVIC_EnableIRQ(TIM22_IRQn);
 
-    timer_start_ms(app->button.encoder_timer, 1000);
+    timer_start_ms(app->button.encoder_timer, BUTTON_ENCODER_TIMEOUT_MS);
 
 }
 
@@ -184,9 +185,8 @@ static inline void button_timeout(APP* app, IPC* ipc)
             return;
 
         case APP_TIMER_ENCODER:
-            lcd_printf(app, 2, 7, "enc: %d\n", BUTTON_ENCODER_TIM_REG->CNT);
-            printf("BUTTON: encoder value %d\n", BUTTON_ENCODER_TIM_REG->CNT);
-            timer_start_ms(app->button.encoder_timer, 1000);
+            lcd_printf(app, 2, 7, "enc: %d\n", BUTTON_ENCODER_TIM_REG->CNT >> 1);
+            timer_start_ms(app->button.encoder_timer, BUTTON_ENCODER_TIMEOUT_MS);
             return;
     }
     error(ERROR_NOT_SUPPORTED);

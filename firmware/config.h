@@ -10,7 +10,10 @@
 #define VERSION                                     "0.1b"
 
 #define HOST                                        1
-#define CLIENT                                      0
+
+#if !(HOST)
+#define CLIENT                                      1
+#endif //
 
 
 #if (HOST)
@@ -36,6 +39,8 @@
 #define BUTTON_ENCODER_TIMER                        TIM_22
 #define BUTTON_ENCODER_CHANNEL1                     TIM_CHANNEL1
 #define BUTTON_ENCODER_CHANNEL2                     TIM_CHANNEL2
+
+#define BUTTON_ENCODER_TIMEOUT_MS                   150
 
 
 // ============================== BATTERY =====================================

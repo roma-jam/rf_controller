@@ -76,10 +76,10 @@ void app()
 
     cc1101_set_packet_size(app.cc1101, 5);
     cc1101_set_channel(app.cc1101, 0);
-    cc1101_set_power(app.cc1101, CC_PwrMinus10dBm);
+    cc1101_set_power(app.cc1101, CC_PwrPlus5dBm);
 
     lcd_printf(&app, 4, 0, "chn: %d", 0);
-    lcd_printf(&app, 5, 0, "pwr: 0x%X", CC_PwrMinus10dBm);
+    lcd_printf(&app, 5, 0, "pwr: 0x%X", CC_PwrPlus5dBm);
 
     // TODO: remove me
     sleep_ms(100);
@@ -89,7 +89,13 @@ void app()
     uint8_t data[100];
     int RSSI;
     app.timer = timer_create(0, HAL_APP);
+
+    lcd_printf(&app, 5, 9, "client");
 #endif // CLIENT
+
+#if (HOST)
+    lcd_printf(&app, 5, 9, "host");
+#endif // HOST
 
     for (;;)
     {

@@ -181,7 +181,7 @@ static inline void cc1101_rf_config(CC1101_HW* cc1101)
     cc1101_write_register(CC_MDMCFG2,  CC_MDMCFG2_VALUE);
 
     cc1101_write_register(CC_MDMCFG1,  CC_DMDCFG1_FEC_DISABLE |
-                                        CC_MDMCFG1_PREAMBLE_BYTES_4 |
+                                        CC_MDMCFG1_PREAMBLE_BYTES_2 |
                                         CC_MDMCFG1_CHANSPC_E);
 
     cc1101_write_register(CC_MDMCFG0,  CC_MDMCFG0_VALUE);
@@ -294,12 +294,14 @@ void cc1101_hw_init(CC1101_HW* cc1101)
     pin_enable(CC1101_MISO_PIN, STM32_GPIO_MODE_AF, AF0);
     pin_enable(CC1101_MOSI_PIN, STM32_GPIO_MODE_AF, AF0);
     gpio_enable_pin(CC1101_CS_PIN, GPIO_MODE_OUT);
-    gpio_enable_pin(CC1101_GDO0_PIN, GPIO_MODE_IN_FLOAT);
-    gpio_enable_pin(CC1101_GDO2_PIN, GPIO_MODE_IN_FLOAT);
+
+    gpio_enable_pin(CC1101_GDO0_PIN, GPIO_MODE_IN_PULLUP);
+//    gpio_enable_pin(CC1101_GDO2_PIN, GPIO_MODE_IN_PULLUP);
+
 
     pin_enable_exti(CC1101_GDO0_PIN, EXTI_FLAGS_FALLING);
     irq_register(CC1101_GDO0_EXTI_IRQ, cc1101_gdo0_irq, (void*)cc1101);
-    NVIC_SetPriority(CC1101_GDO0_EXTI_IRQ, 14);
+    NVIC_SetPriority(CC1101_GDO0_EXTI_IRQ, 7);
 
     gpio_set_pin(CC1101_CS_PIN);
 
