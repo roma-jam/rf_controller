@@ -239,6 +239,7 @@ static inline void cc1101_rf_config(CC1101_HW* cc1101)
                                         CC_MCSM1_TXOFF_MODE_IDLE);
 
     cc1101_write_register(CC_MCSM2, CC_MCSM2_RX_TIME_SYNC_UNTIL_END_OF_PKT);
+
 }
 
 #if (CC1101_DEBUG_INFO)
