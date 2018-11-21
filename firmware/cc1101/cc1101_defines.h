@@ -170,7 +170,7 @@ be configured to values less than 0x30. The GDO0 default value is CLK_XOSC/192. 
 
 // MDMCFG1
 #define CC_MDMCFG1_FEC_ENABLE                   (1 << 7) /* Only supported for fixed packet length mode */
-#define CC_DMDCFG1_FEC_DISABLE                  (0 << 7)
+#define CC_MDMCFG1_FEC_DISABLE                  (0 << 7)
 #define CC_MDMCFG1_PREAMBLE_BYTES_2             (0 << 4)
 #define CC_MDMCFG1_PREAMBLE_BYTES_3             (1 << 4)
 #define CC_MDMCFG1_PREAMBLE_BYTES_4             (2 << 4)

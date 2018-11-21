@@ -100,10 +100,33 @@ static inline void button_left_press(APP* app)
     lcd_printf(app, 2, 0, "1 x 1");
 
 #if (HOST)
-    uint8_t packet[5] = {0};
+    uint8_t packet[10] = {0};
+//    packet[0] = 0xAA;
+//    packet[1] = 0xFF;
+//    packet[2] = 0x01;
+//    packet[3] = 0x20;
+//    packet[4] = 0x80;
+//    packet[5] = 0x2F;
+//    packet[6] = 0xFE;
+//    packet[7] = 0x11;
+//    packet[8] = 0x22;
+//    packet[9] = 0x33;
+
+    packet[0] = 0xAA;
+    packet[1] = 0xFF;
+    packet[2] = 0xAA;
+    packet[3] = 0xFF;
+    packet[4] = 0xAA;
+    packet[5] = 0xFF;
+    packet[6] = 0xAA;
+    packet[7] = 0xFF;
+    packet[8] = 0xAA;
+    packet[9] = 0xFF;
+
+
     lcd_printf(app, 1, 0, "Radio ping..");
     /* send packet by radio */
-    if(cc1101_transmit(app->cc1101, packet, 5))
+    if(cc1101_transmit(app->cc1101, packet, 10))
         lcd_printf(app, 1, 0, "Radio ping..SEND");
     else
         lcd_printf(app, 1, 0, "Radio ping..FAIL");

@@ -190,7 +190,6 @@ void stm32_spi_byte(EXO* exo, IPC* ipc)
     SPI_PORT port = (SPI_PORT)ipc->param1;
     uint8_t byte = (uint8_t)ipc->param2;
 
-
     SPI* spi = exo->spi.spis[port];
     if (spi == NULL)
     {
@@ -199,7 +198,9 @@ void stm32_spi_byte(EXO* exo, IPC* ipc)
     }
 
     __SPI_REGS[port]->DR = byte;
-    while(!(__SPI_REGS[port]->SR & SPI_SR_RXNE));
+    while (!(__SPI_REGS[port]->SR & SPI_SR_TXE)); // Wait until TX buffer is empty
+    while (__SPI_REGS[port]->SR & SPI_SR_BSY); // Wait until busy
+    while(!(__SPI_REGS[port]->SR & SPI_SR_RXNE)); // Wait until RX not empty
     byte = __SPI_REGS[port]->DR;
     ipc->param2 = byte;
 }

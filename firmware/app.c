@@ -74,7 +74,7 @@ void app()
     battery_init(&app);
     app.cc1101 = cc1101_open();
 
-    cc1101_set_packet_size(app.cc1101, 5);
+    cc1101_set_packet_size(app.cc1101, 10);
     cc1101_set_channel(app.cc1101, 0);
 
     cc1101_set_power(app.cc1101, CC_Pwr0dBm);
@@ -106,7 +106,7 @@ void app()
             case HAL_APP:
                 if(HAL_ITEM(ipc.cmd) == IPC_TIMEOUT)
                 {
-                    if(cc1101_receive(app.cc1101, data, 5, CC1101_FLAGS_NO_TIMEOUT, &RSSI) > 0)
+                    if(cc1101_receive(app.cc1101, data, 10, CC1101_FLAGS_NO_TIMEOUT, &RSSI) > 0)
                         lcd_printf(&app, 1, 0, "PING, %d dBm", RSSI);
                     else
                         lcd_printf(&app, 1, 0, "PING...FAILURE");

@@ -43,8 +43,8 @@
 //#define CC1101_BITRATE_38K4
 //#define CC1101_BITRATE_100K
 //#define CC1101_BITRATE_250K
-//#define CC1101_BITRATE_500K
-#define CC1101_BITRATE_100K_GFSK_47KHz_BW_325KHz
+#define CC1101_BITRATE_500K
+//#define CC1101_BITRATE_100K_GFSK_47KHz_BW_325KHz
 
 #define CC1101_XTAL_26000000
 //#define CC1101_XTAL_27000000
@@ -221,9 +221,9 @@
 #endif // CC1101_XTAL_27000000
 
 #if defined(CC1101_XTAL_26000000)
-//#define CC_FREQ2_VALUE      0x10        // Frequency control word, high byte.
-//#define CC_FREQ1_VALUE      0xA7        // Frequency control word, middle byte.
-//#define CC_FREQ0_VALUE      0x62        // Frequency control word, low byte.
+#define CC_FREQ2_VALUE      0x10        // Frequency control word, high byte.
+#define CC_FREQ1_VALUE      0xA7        // Frequency control word, middle byte.
+#define CC_FREQ0_VALUE      0x62        // Frequency control word, low byte.
 
 // Exponent of Channel Spacing
 #define CC_MDMCFG1_CHANSPC_E    0x02
