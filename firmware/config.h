@@ -9,7 +9,7 @@
 
 #define VERSION                                     "0.1b"
 
-#define HOST                                        0
+#define HOST                                        1
 
 #if !(HOST)
 #define CLIENT                                      1
