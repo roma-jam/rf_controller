@@ -55,8 +55,12 @@ void button_init(APP* app)
     /* Sampling filter & Prescaler */
     BUTTON_ENCODER_TIM_REG->CCMR1  = TIM_CCMR1_IC1PSC | TIM_CCMR1_IC1F | TIM_CCMR1_IC2PSC | TIM_CCMR1_IC2F;
 
-    BUTTON_ENCODER_TIM_REG->ARR    = 199;
-    BUTTON_ENCODER_TIM_REG->CNT    = 100;
+//    BUTTON_ENCODER_TIM_REG->ARR    = 199;
+//    BUTTON_ENCODER_TIM_REG->CNT    = 100;
+
+    BUTTON_ENCODER_TIM_REG->ARR    = (CC_PwrMax << 1) - 1;
+    BUTTON_ENCODER_TIM_REG->CNT    = CC_Pwr0dBm << 1;
+
     BUTTON_ENCODER_TIM_REG->CR1    = TIM_CR1_CEN;
 //    BUTTON_ENCODER_TIM_REG->DIER   = TIM_DIER_CC1IE | TIM_DIER_CC2IE | TIM_DIER_UIE;
 
@@ -133,8 +137,7 @@ static inline void button_left_press(APP* app)
 #endif // HOST
 
 #if (CLIENT)
-    timer_start_ms(app->timer, 1000);
-    lcd_printf(app, 1, 0, "PING..          ");
+    timer_start_ms(app->timer, 5000);
 #endif
 }
 
@@ -194,6 +197,7 @@ static inline void button_up(APP *app, uint8_t button)
 
 static inline void button_timeout(APP* app, IPC* ipc)
 {
+    uint8_t value = 0;
     switch (ipc->param1)
     {
         case APP_TIMER_BUTTON_LONG_PRESS:
@@ -208,7 +212,15 @@ static inline void button_timeout(APP* app, IPC* ipc)
             return;
 
         case APP_TIMER_ENCODER:
-            lcd_printf(app, 2, 7, "enc: %d\n", BUTTON_ENCODER_TIM_REG->CNT >> 1);
+            value = BUTTON_ENCODER_TIM_REG->CNT >> 1;
+            lcd_printf(app, 2, 7, "enc: %d\n", value);
+            // TODO: temporary thing
+            if(app->power != value)
+            {
+                app->power = value;
+                cc1101_set_power(app->cc1101, CC_PwrdBmValue[app->power]);
+                lcd_printf(app, 5, 0, "pwr:%s", CC_PwrdBmString[app->power]);
+            }
             timer_start_ms(app->button.encoder_timer, BUTTON_ENCODER_TIMEOUT_MS);
             return;
     }

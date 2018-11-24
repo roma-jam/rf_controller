@@ -248,18 +248,37 @@ be configured to values less than 0x30. The GDO0 default value is CLK_XOSC/192. 
 #define CC_PKTCTRL1_ADDR_CHECK_0_FF_BROADCAST   (3 << 0)
 
 // =================================== Power ===================================
-#define CC_PwrMinus30dBm                        0x03
-#define CC_PwrMinus27dBm                        0x08
-#define CC_PwrMinus25dBm                        0x0D
-#define CC_PwrMinus20dBm                        0x17
-#define CC_PwrMinus15dBm                        0x1D
-#define CC_PwrMinus10dBm                        0x26
-#define CC_PwrMinus6dBm                         0x37
-#define CC_Pwr0dBm                              0x50
-#define CC_PwrPlus5dBm                          0x86
-#define CC_PwrPlus7dBm                          0xCD
-#define CC_PwrPlus10dBm                         0xC5
-#define CC_PwrPlus12dBm                         0xC0
+typedef enum {
+    CC_PwrMinus30dBm = 0,
+    CC_PwrMinus27dBm,
+    CC_PwrMinus25dBm,
+    CC_PwrMinus20dBm,
+    CC_PwrMinus15dBm,
+    CC_PwrMinus10dBm,
+    CC_PwrMinus6dBm,
+    CC_Pwr0dBm,
+    CC_PwrPlus5dBm,
+    CC_PwrPlus7dBm,
+    CC_PwrPlus10dBm,
+    CC_PwrPlus12dBm,
+    CC_PwrMax
+} CC_POWER_DBM;
+
+extern const char CC_PwrdBmString[CC_PwrMax][7];
+extern const uint8_t CC_PwrdBmValue[CC_PwrMax];
+
+//#define CC_PwrMinus30dBm                        0x03
+//#define CC_PwrMinus27dBm                        0x08
+//#define CC_PwrMinus25dBm                        0x0D
+//#define CC_PwrMinus20dBm                        0x17
+//#define CC_PwrMinus15dBm                        0x1D
+//#define CC_PwrMinus10dBm                        0x26
+//#define CC_PwrMinus6dBm                         0x37
+//#define CC_Pwr0dBm                              0x50
+//#define CC_PwrPlus5dBm                          0x86
+//#define CC_PwrPlus7dBm                          0xCD
+//#define CC_PwrPlus10dBm                         0xC5
+//#define CC_PwrPlus12dBm                         0xC0
 
 // ======================= Registers, strobes etc. =============================
 // Flags

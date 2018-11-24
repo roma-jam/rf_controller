@@ -14,6 +14,7 @@
 #include "app_hid.h"
 #include "button.h"
 #include "battery.h"
+#include "cc1101/cc1101.h"
 
 typedef enum {
     HAL_CC1101 = HAL_APP,
@@ -33,6 +34,8 @@ typedef struct _APP {
     HANDLE cc1101;
     BUTTON button;
     BATTERY battery;
+    //
+    CC_POWER_DBM power;
 } APP;
 
 #endif // APP_PRIVATE_H

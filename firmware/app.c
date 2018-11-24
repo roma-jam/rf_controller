@@ -77,8 +77,12 @@ void app()
     cc1101_set_packet_size(app.cc1101, 10);
     cc1101_set_channel(app.cc1101, 0);
 
-    cc1101_set_power(app.cc1101, CC_Pwr0dBm);
-    lcd_printf(&app, 5, 0, "pwr: 0x%X", CC_Pwr0dBm);
+
+    app.power = CC_Pwr0dBm;
+
+
+    cc1101_set_power(app.cc1101, CC_PwrdBmValue[app.power]);
+    lcd_printf(&app, 5, 0, "pwr:%s", CC_PwrdBmString[app.power]);
     lcd_printf(&app, 4, 0, "chn: %d", 0);
 
     // TODO: remove me
@@ -106,10 +110,12 @@ void app()
             case HAL_APP:
                 if(HAL_ITEM(ipc.cmd) == IPC_TIMEOUT)
                 {
+                    lcd_printf(&app, 1, 0, "PING..          ");
                     if(cc1101_receive(app.cc1101, data, 10, CC1101_FLAGS_NO_TIMEOUT, &RSSI) > 0)
-                        lcd_printf(&app, 1, 0, "PING, %d dBm", RSSI);
+                        lcd_printf(&app, 1, 0, "PING.. %d dBm", RSSI);
                     else
                         lcd_printf(&app, 1, 0, "PING...FAILURE");
+                    timer_start_ms(app.timer, 5000);
                 }
                 break;
 #endif // CLIENT
