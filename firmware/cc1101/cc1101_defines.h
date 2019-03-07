@@ -7,6 +7,9 @@
 
 #ifndef _CC1101_DEFINES_H_
 #define _CC1101_DEFINES_H_
+
+#define CC_MAX_CHANNELS                         50
+
 // ================================= BITS DEFENITION ===========================
 // IOCFG2
 #define CC_IOCFG2_GDO2_ACTIVE_HIGH              (0 << 6)

@@ -213,7 +213,6 @@ static inline void lcd_device_printf(LCD* lcd, IO* io)
     unsigned int i;
     LCD_STACK* stack = io_stack(io);
 
-
     index = stack->column * 6 + stack->row * LCD_WIDTH;
     for(i = 0; i < io->data_size; i++)
         lcd_device_draw_char(lcd, &index, *(uint8_t*)(io_data(io) + i));
@@ -244,6 +243,12 @@ static void lcd_cmd(LCD* lcd, IPC* ipc)
         case LCD_CLEAR:
             lcd_device_clear(lcd);
             break;
+        case LCD_MODE_SET:
+            lcd->mode = (LCD_MODE)ipc->param1;
+            break;
+        case LCD_MODE_GET:
+            ipc->param2 = lcd->mode;
+            break;
         default:
 #if (APP_DEBUG_ERRORS)
             printf("LCD: Unsupported cmd item: %#X\n", HAL_ITEM(ipc->cmd));
@@ -267,6 +272,16 @@ void lcd_init(APP* app)
 void lcd_clear(APP* app)
 {
     ack(app->lcd, HAL_REQ(HAL_LCD, LCD_CLEAR), 0, 0, 0);
+}
+
+void lcd_set_mode(APP* app, LCD_MODE mode)
+{
+    ack(app->lcd, HAL_REQ(HAL_LCD, LCD_MODE_SET), mode, 0, 0);
+}
+
+LCD_MODE lcd_get_mode(APP* app)
+{
+    return get(app->lcd, HAL_REQ(HAL_LCD, LCD_MODE_GET), 0, 0, 0);
 }
 
 void lcd_printf(APP* app, uint8_t row, uint8_t column, const char *format, ...)

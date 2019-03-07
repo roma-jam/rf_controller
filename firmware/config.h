@@ -7,9 +7,9 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#define VERSION                                     "0.1b"
+#define VERSION                                     "0.2b"
 
-#define HOST                                        0
+#define HOST                                        1
 #if !(HOST)
 #define CLIENT                                      1
 #endif //

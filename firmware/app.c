@@ -69,19 +69,25 @@ void app()
 
     app_init(&app);
     checksum_init(&app);
-    button_init(&app);
     lcd_init(&app);
+
     battery_init(&app);
+
     app.cc1101 = cc1101_open();
-
     cc1101_set_packet_size(app.cc1101, 10);
-    cc1101_set_channel(app.cc1101, 0);
+    app.active_param = APP_PARAM_CHANNEL;
+    app.params.power = CC_Pwr0dBm;
+    app.params.channel = 0;
 
-    app.power = CC_Pwr0dBm;
+    cc1101_set_channel(app.cc1101, app.params.channel);
+    cc1101_set_power(app.cc1101, CC_PwrdBmValue[app.params.power]);
 
-    cc1101_set_power(app.cc1101, CC_PwrdBmValue[app.power]);
-    lcd_printf(&app, 5, 0, "pwr:%s", CC_PwrdBmString[app.power]);
-    lcd_printf(&app, 4, 0, "chn: %d", 0);
+    lcd_set_mode(&app, LCD_MODE_OVERWRITE_INVERTED);
+    lcd_printf(&app, 4, 0, "chn: %d", app.params.channel);
+    lcd_set_mode(&app, LCD_MODE_OVERWRITE);
+    lcd_printf(&app, 5, 0, "pwr:%s", CC_PwrdBmString[app.params.power]);
+
+    button_init(&app);
 
 #if (CLIENT)
     uint8_t data[100];
@@ -105,10 +111,11 @@ void app()
                 if(HAL_ITEM(ipc.cmd) == IPC_TIMEOUT)
                 {
                     lcd_printf(&app, 1, 0, "PING..          ");
-                    if(cc1101_receive(app.cc1101, data, 10, CC1101_FLAGS_NO_TIMEOUT, &RSSI) > 0)
+                    int res = cc1101_receive(app.cc1101, data, 10, CC1101_SET_TIMEOUT_MS(10000), &RSSI);
+                    if(res > 0)
                         lcd_printf(&app, 1, 0, "PING.. %d dBm", RSSI);
                     else
-                        lcd_printf(&app, 1, 0, "PING...FAILURE");
+                        lcd_printf(&app, 1, 0, "PING...ERR: %d", res);
                     timer_start_ms(app.timer, 5000);
                 }
                 break;

@@ -15,7 +15,9 @@
 typedef enum {
     LCD_INIT = IPC_USER,
     LCD_PRINTF,
-    LCD_CLEAR
+    LCD_CLEAR,
+    LCD_MODE_SET,
+    LCD_MODE_GET
 } LCD_IPCS;
 
 typedef enum {
@@ -46,6 +48,9 @@ extern const REX __LCD;
 
 void lcd_init(APP* app);
 void lcd_clear(APP* app);
+void lcd_set_mode(APP* app, LCD_MODE mode);
+LCD_MODE lcd_get_mode(APP* app);
 void lcd_printf(APP* app, uint8_t row, uint8_t column, const char *format, ...);
+//void lcd_printf_mode(APP* app, uint8_t row, uint8_t column, LCD_MODE mode, const char *format, ...);
 
 #endif /* LCD_H_ */
