@@ -77,17 +77,11 @@ void app()
     cc1101_set_packet_size(app.cc1101, 10);
     cc1101_set_channel(app.cc1101, 0);
 
-
     app.power = CC_Pwr0dBm;
-
 
     cc1101_set_power(app.cc1101, CC_PwrdBmValue[app.power]);
     lcd_printf(&app, 5, 0, "pwr:%s", CC_PwrdBmString[app.power]);
     lcd_printf(&app, 4, 0, "chn: %d", 0);
-
-    // TODO: remove me
-    sleep_ms(100);
-    process_info();
 
 #if (CLIENT)
     uint8_t data[100];

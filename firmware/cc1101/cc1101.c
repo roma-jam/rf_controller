@@ -94,6 +94,8 @@ static int cc1101_receive_internal(HANDLE process, IO* io, unsigned int size, un
     stack->size = size;
     stack->flags = flags;
     int res = io_write_sync(process, HAL_IO_REQ(HAL_CC1101, IPC_READ), 0, io);
+    if(res < 0)
+        return res;
     return io_read_sync(process, HAL_IO_REQ(HAL_CC1101, CC1101_READ_FIFO), 0, io, res);
 }
 
@@ -167,6 +169,9 @@ static void cc1101_request(CC1101_HW* cc1101, IPC* ipc)
             break;
         case IPC_READ:
             cc1101_hw_rx(cc1101, ipc->process, (IO*)ipc->param2, ipc->param3);
+            break;
+        case IPC_TIMEOUT:
+            cc1101_hw_timeout(cc1101);
             break;
         case CC1101_RESET:
             cc1101_hw_reset(cc1101);

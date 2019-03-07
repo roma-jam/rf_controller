@@ -25,7 +25,7 @@ typedef enum {
 
 typedef struct {
     CC1101_HW_STATE state;
-    HANDLE process;
+    HANDLE process, to;
     IO* io;
     uint8_t status;
     uint8_t channel;
@@ -40,6 +40,7 @@ void cc1101_hw_calibrate(CC1101_HW* cc1101);
 void cc1101_hw_set_channel(CC1101_HW* cc1101, uint8_t channel_num);
 void cc1101_hw_set_tx_power(CC1101_HW* cc1101, uint8_t power);
 void cc1101_hw_set_radio_pkt_size(CC1101_HW* cc1101, uint8_t size);
+void cc1101_hw_timeout(CC1101_HW* cc1101);
 void cc1101_hw_tx(CC1101_HW* cc1101, HANDLE process, IO* io, unsigned int size);
 void cc1101_hw_rx(CC1101_HW* cc1101, HANDLE process, IO* io, unsigned int size);
 

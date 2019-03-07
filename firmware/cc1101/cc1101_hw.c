@@ -266,6 +266,8 @@ static inline void cc1101_gdo0_irq(int vector, void* param)
     switch(cc1101->state)
     {
         case CC1101_STATE_RX:
+            /* shutdown timer */
+            timer_istop(cc1101->to);
             /* go to process for read FIFO */
             iio_complete(cc1101->process, HAL_IO_CMD(HAL_CC1101, IPC_READ), 0, cc1101->io);
             cc1101->state = CC1101_STATE_IDLE;
@@ -293,6 +295,16 @@ static inline void cc1101_gdo0_irq(int vector, void* param)
 
 void cc1101_hw_init(CC1101_HW* cc1101)
 {
+    cc1101->to = timer_create(0, HAL_CC1101);
+
+    if(INVALID_HANDLE == cc1101->to)
+    {
+#if (CC1101_DEBUG_ERRORS)
+        printf("CC1101: timer create failure\n");
+#endif // CC1101_DEBUG_ERRORS
+        return;
+    }
+
     cc1101->state = CC1101_STATE_OFF;
 
     pin_enable(CC1101_CLK_PIN, STM32_GPIO_MODE_AF | GPIO_SPEED_HIGH, AF0);
@@ -328,6 +340,8 @@ void cc1101_hw_init(CC1101_HW* cc1101)
 
     cc1101->process = INVALID_HANDLE;
     cc1101->state = CC1101_STATE_IDLE;
+
+
 
 #if (CC1101_DEBUG_REQUESTS)
     printf("CC1101: idle\n");
@@ -422,6 +436,26 @@ void cc1101_hw_tx(CC1101_HW* cc1101, HANDLE process, IO* io, unsigned int size)
     error(ERROR_SYNC);
 }
 
+void cc1101_hw_timeout(CC1101_HW* cc1101)
+{
+#if (CC1101_DEBUG_REQUESTS)
+    printf("CC1101:timeout\n");
+#endif // CC1101_DEBUG_REQUESTS
+
+    /* shutdown IRQ */
+    NVIC_DisableIRQ(CC1101_GDO0_EXTI_IRQ);
+
+    /* clear buffer */
+    cc1101_flush_rx_fifo(cc1101);
+
+    /* send ipc */
+    io_complete_ex(cc1101->process, HAL_IO_CMD(HAL_CC1101, IPC_READ), 0, cc1101->io, ERROR_TIMEOUT);
+    /* chage state to IDLE */
+    cc1101->state = CC1101_STATE_IDLE;
+    cc1101->process = INVALID_HANDLE;
+    cc1101->io = NULL;
+}
+
 void cc1101_hw_rx(CC1101_HW* cc1101, HANDLE process, IO* io, unsigned int size)
 {
 #if (CC1101_DEBUG_REQUESTS)
@@ -434,9 +468,10 @@ void cc1101_hw_rx(CC1101_HW* cc1101, HANDLE process, IO* io, unsigned int size)
     cc1101->process = process;
     cc1101->io = io;
 
-    if(!(stack->flags & CC1101_FLAGS_NO_TIMEOUT))
+    if(stack->flags & CC1101_FLAGS_TIMEOUT)
     {
-        printf("TODO: timeout\n");
+        printf("set TO: %d\n", CC1101_GET_TIMEOUT_MS(stack->flags));
+        timer_start_ms(cc1101->to, CC1101_GET_TIMEOUT_MS(stack->flags));
     }
 
     cc1101_flush_rx_fifo(cc1101);

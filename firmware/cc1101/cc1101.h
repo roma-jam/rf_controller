@@ -17,6 +17,10 @@ extern const REX __CC1101;
 #define CC1101_FLAGS_EMPTY                      (0 << 0)
 #define CC1101_FLAGS_TRANSMIT_ACK               (1 << 0)
 #define CC1101_FLAGS_NO_TIMEOUT                 (1 << 1)
+#define CC1101_FLAGS_TIMEOUT                    (1 << 2)
+
+#define CC1101_SET_TIMEOUT_MS(x)                ((x << 16) | CC1101_FLAGS_TIMEOUT)
+#define CC1101_GET_TIMEOUT_MS(f)                ((f % 0xFFFF0000) >> 16)
 
 typedef enum {
     CC1101_RESET = IPC_USER,
@@ -47,6 +51,7 @@ void cc1101_set_power(HANDLE process, uint8_t CC_Pwr);
 void cc1101_close(HANDLE process);
 bool cc1101_transmit(HANDLE process, uint8_t* data, unsigned int data_size);
 void cc1101_transmit_with_ack(HANDLE process, IO* io);
+
 int cc1101_receive(HANDLE process, uint8_t* data, unsigned int data_size, unsigned int flags, int* RSSI);
 
 int8_t RSSI_dBm(uint8_t raw);
@@ -54,3 +59,4 @@ int8_t RSSI_dBm(uint8_t raw);
 
 
 #endif /* CC1101_H_ */
+
